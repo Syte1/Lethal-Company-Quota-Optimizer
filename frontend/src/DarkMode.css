@@ -1,0 +1,44 @@
+/* DarkMode.css */
+body {
+    background-color: #121212;
+    color: #e1e1e1;
+}
+
+.custom-dark {
+    background-color: #1e1e1e;
+    border-color: #373737;
+}
+
+.custom-dark-input {
+    background-color: #2c2c2c;
+    color: #e1e1e1;
+    border-color: #373737;
+}
+
+.custom-dark-input:focus {
+    background-color: #424242; /* Lighter gray when input is focused */
+    color: #e1e1e1;
+    border-color: #525252;
+    outline: none; /* Optional: Removes the default focus outline */
+}
+.custom-dark-btn {
+    background-color: #373737;
+    color: #e1e1e1;
+    border-color: #525252;
+}
+
+.custom-dark-list {
+    background-color: #2c2c2c;
+    color: #e1e1e1;
+    border-color: #373737;
+}
+
+.custom-dark-list-item {
+    background-color: #2c2c2c;
+    color:#e1e1e1
+}
+
+.custom-dark-alert {
+    background-color: #333333;
+    color: #e1e1e1;
+}
