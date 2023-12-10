@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Cookies from "js-cookie";
 import "./DarkMode.css";
 
 function App() {
-	const [items, setItems] = useState([]);
+	// Initialize state with values from cookies or default to empty array / null
+	const [items, setItems] = useState(() => {
+		const savedItems = Cookies.get('items');
+		return savedItems ? JSON.parse(savedItems) : [];
+	});
+	const [cost, setCost] = useState(() => {
+		const savedCost = Cookies.get('cost');
+		return savedCost ? parseFloat(savedCost) : 0;
+	});
+	const [result, setResult] = useState(() => {
+		const savedResult = Cookies.get('result');
+		return savedResult ? JSON.parse(savedResult) : null;
+	});
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
-	const [cost, setCost] = useState(0);
-	const [result, setResult] = useState(null);
+
+	useEffect(() => {
+		// Update cookies whenever items or result change
+		Cookies.set('items', JSON.stringify(items));
+		Cookies.set('cost', cost);
+		Cookies.set('result', JSON.stringify(result));
+	}, [items, cost, result]);
 
 	const handleAddItem = (e) => {
 		e.preventDefault();
@@ -24,6 +42,13 @@ function App() {
 			alert("Please enter a value for the item.");
 		}
 	};
+  const handleDeleteItem = (index) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    setItems(newItems);
+    // Optionally remove or update the result since the item list has changed
+    setResult(null);
+};
 
 	const handleSubmit = async () => {
 		try {
@@ -40,6 +65,15 @@ function App() {
 			console.error("Error in optimization request", error);
 		}
 	};
+
+  const handleClearData = () => {
+    Cookies.remove('items');
+    Cookies.remove('cost');
+    Cookies.remove('result');
+    setItems([]);
+    setCost(0);
+    setResult(null);
+  };
 
 	return (
 		<div className="container mt-5 custom-dark">
@@ -87,25 +121,40 @@ function App() {
 				/>
 			</div>
 
-			<button
-				className="btn btn-success mb-3 custom-dark-btn"
-				onClick={handleSubmit}
-			>
-				Optimize
-			</button>
+      <div className="mb-3 d-flex justify-content-between">
+                <button
+                    className="btn btn-success custom-dark-btn"
+                    onClick={handleSubmit}
+                >
+                    Optimize
+                </button>
+                <button
+                    className="btn btn-danger custom-dark-btn"
+                    onClick={handleClearData}
+                >
+                    Clear List
+                </button>
+            </div>
 
-			{items.length > 0 && (
-				<ul className="list-group custom-dark-list">
-					{items.map((item, index) => (
-						<li
-							key={index}
-							className="list-group-item custom-dark-list-item"
-						>
-							{item.name}: ${item.value}
-						</li>
-					))}
-				</ul>
-			)}
+      
+            {items.length > 0 && (
+                <ul className="list-group custom-dark-list">
+                    {items.map((item, index) => (
+                        <li
+                            key={index}
+                            className="list-group-item custom-dark-list-item d-flex justify-content-between align-items-center"
+                        >
+                            {item.name}: ${item.value}
+                            <button
+                                className="btn btn-sm btn-danger"
+                                onClick={() => handleDeleteItem(index)}
+                            >
+                                x
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )}
 
 			{result && (
 				<div className="alert alert-info mt-3 custom-dark-alert">
