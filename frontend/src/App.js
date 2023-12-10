@@ -138,7 +138,7 @@ function App() {
 				</form>
 
 				<div className="mb-3">
-					<label className="form-label text-white">Cost</label>
+					<label className="form-label text-white">Quota</label>
 					<input
 						type="number"
 						className="form-control custom-dark-input"
