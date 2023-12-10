@@ -32,7 +32,7 @@ function App() {
 				{}
 			);
 			const response = await axios.post(
-				"http://localhost:5000/optimize",
+				"https://lethal-company-item-optimizer-backend.onrender.com/optimize",
 				{ items: itemsObject, cost }
 			);
 			setResult(response.data);
