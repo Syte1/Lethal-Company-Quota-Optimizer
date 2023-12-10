@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
 import "./DarkMode.css";
 import AdComponent from './AdComponent';
+import TutorialModal from './TutorialModal';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -20,8 +21,13 @@ function App() {
 		const savedResult = Cookies.get("result");
 		return savedResult ? JSON.parse(savedResult) : null;
 	});
+  const toggleTutorialModal = () => {
+    setIsTutorialVisible(!isTutorialVisible);
+  };
+
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
+  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
 	useEffect(() => {
 		// Update cookies whenever items or result change
@@ -99,7 +105,9 @@ function App() {
 				<h1 className="text-center mb-4 text-white">
 					Belal's Quota Optimizer
 				</h1>
-
+        <div className="text-center">
+        <button onClick={toggleTutorialModal} className="btn btn-info mb-3">Tutorial</button>
+        </div>
 				<form onSubmit={handleAddItem} className="mb-3">
 					<div className="row g-3 align-items-end">
 						<div className="col">
@@ -199,6 +207,7 @@ function App() {
 						<div>Total Value: ${result.totalValue}</div>
 					</div>
 				)}
+        <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
 			</div>
       <AdComponent />
 		</div>
