@@ -45,3 +45,7 @@ html, body {
     background-color: #333333;
     color: #e1e1e1;
 }
+
+.highlighted-item {
+    background-color: #014e0a; /* Adjust the color as needed */
+}

@@ -76,6 +76,14 @@ function App() {
 		setResult(null);
 	};
 
+  const handleRemoveHighlightedItems = () => {
+    if (result && result.selectedItems) {
+        const remainingItems = items.filter(item => !result.selectedItems.includes(item.name));
+        setItems(remainingItems);
+        // Optionally, you can also clear the result if you want
+        // setResult(null);
+    }
+};
 	// Apply styles for the background
 	const backgroundStyle = {
 		minWidth: "100vh", // Minimum height to fill the viewport height
@@ -151,16 +159,25 @@ function App() {
 					>
 						Clear List
 					</button>
+          {result && result.selectedItems && (
+                        <button
+                            className="btn btn-warning custom-dark-btn"
+                            onClick={handleRemoveHighlightedItems}
+                        >
+                            Remove Highlighted Items
+                        </button>
+                    )}
 				</div>
 
-				{items.length > 0 && (
-					<ul className="list-group custom-dark-list">
-						{items.map((item, index) => (
-							<li
-								key={index}
-								className="list-group-item custom-dark-list-item d-flex justify-content-between align-items-center"
-							>
-								{item.name}: ${item.value}
+        {items.length > 0 && (
+            <ul className="list-group custom-dark-list">
+                {items.map((item, index) => {
+                    // Check if the item is in the optimized list
+                    const isHighlighted = result && result.selectedItems.includes(item.name);
+                    const itemClasses = `list-group-item custom-dark-list-item ${isHighlighted ? 'highlighted-item' : ''} d-flex justify-content-between align-items-center`;
+                    return (
+                        <li key={index} className={itemClasses}>
+                            {item.name}: ${item.value}
 								<button
 									className="btn btn-sm btn-danger"
 									onClick={() => handleDeleteItem(index)}
@@ -168,7 +185,7 @@ function App() {
 									x
 								</button>
 							</li>
-						))}
+						)})}
 					</ul>
 				)}
 
