@@ -96,7 +96,7 @@ function App() {
 		<div style={backgroundStyle}>
 			<div className="container mt-5 custom-dark">
 				<h1 className="text-center mb-4 text-white">
-					Belal's Item Optimizer
+					Belal's Quota Optimizer
 				</h1>
 
 				<form onSubmit={handleAddItem} className="mb-3">
