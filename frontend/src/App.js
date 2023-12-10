@@ -3,6 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
 import "./DarkMode.css";
+import AdComponent from './AdComponent';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -199,6 +200,7 @@ function App() {
 					</div>
 				)}
 			</div>
+      <AdComponent />
 		</div>
 	);
 }
