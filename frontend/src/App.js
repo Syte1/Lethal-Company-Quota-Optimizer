@@ -58,7 +58,7 @@ function App() {
 				{}
 			);
 			const response = await axios.post(
-				"https://lethal-company-item-optimizer-backend.onrender.com/optimize",
+				"https://lethal-company-quota-optimizer-backend.onrender.com/optimize",
 				{ items: itemsObject, cost }
 			);
 			setResult(response.data);
