@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
-import "./DarkMode.css";
 import TutorialModal from './TutorialModal';
 // import animationGif from "./lethal-company-dance.gif";
 
@@ -23,7 +21,8 @@ function App() {
   const toggleTutorialModal = () => {
     setIsTutorialVisible(!isTutorialVisible);
   };
-
+	const itemNameInputRef = useRef(null);
+	const itemValueInputRef = useRef(null);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
@@ -92,115 +91,140 @@ function App() {
         }
     };
 	// Apply styles for the background
-	const backgroundStyle = {
-		minWidth: "100vh", // Minimum height to fill the viewport height
-    minHeight: "100vh",
-		background: `url('/lethal-company-dance.gif') no-repeat center center`,
-		backgroundSize: "cover", // Cover the entire viewport
-	};
-	const itemNameInputRef = useRef(null);
-	return (
-		<div style={backgroundStyle}>
-			<div className="container mt-5 custom-dark">
-				<h1 className="text-center mb-4 text-white">
-					Belal's Quota Optimizer
-				</h1>
-        <div className="text-center">
-        <button onClick={toggleTutorialModal} className="btn btn-info mb-3">Tutorial</button>
-        </div>
-				<form onSubmit={handleAddItem} className="mb-3">
-					<div className="row g-3 align-items-end">
-						<div className="col">
-							<label className="form-label text-white">
-								Item Name (optional)
-							</label>
+    const handleItemNameKeyDown = (e) => {
+        if (e.keyCode === 13) { // Enter key
+            e.preventDefault();
+            itemValueInputRef.current.focus();
+        }
+    };
+
+
+	const handleItemValueKeyDown = (e) => {
+        if (e.keyCode === 13) { // Enter key
+            e.preventDefault();
+            handleAddItem(e);
+            itemNameInputRef.current.focus();
+        }
+    };
+    return (
+        <div className="min-h-screen min-w-full bg-cover bg-center" style={{backgroundImage: `url('/lethal-company-dance.gif')`}}>
+            <div className="container mx-auto p-4 text-white">
+                <h1 className="text-center text-4xl mb-4">
+                    Belal's Quota Optimizer
+                </h1>
+                <div className="text-center">
+                    <button onClick={toggleTutorialModal} className="bg-blue-500 text-white py-2 px-4 rounded mb-3">Tutorial</button>
+                </div>
+                <form onSubmit={handleAddItem} className="mb-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label className="form-label">
+                                Item Name (optional)
+                            </label>
 							<input
 								type="text"
-								className="form-control custom-dark-input"
+								className="w-full p-2 border-4 border-slate-900 rounded bg-gray-700 text-white"
 								value={newItemName}
 								onChange={(e) => setNewItemName(e.target.value)}
+								onKeyDown={handleItemNameKeyDown}
 								ref={itemNameInputRef}
+								placeholder="Enter item name"
 							/>
-						</div>
-						<div className="col">
-							<label className="form-label text-white">
-								Item Value
-							</label>
+							<p className="text-xs text-gray-300">
+                                Pro Tip: Press Enter to move to the next field!
+                            </p>
+                        </div>
+                        <div>
+                            <label className="form-label">
+                                Item Value
+                            </label>
 							<input
 								type="number"
-								className="form-control custom-dark-input"
+								className="w-full p-2 border-4 border-slate-900 rounded bg-gray-700 text-white"
 								value={newItemValue}
-								onChange={(e) =>
-									setNewItemValue(e.target.value)
-								}
+								onChange={(e) => setNewItemValue(e.target.value)}
+								onKeyDown={handleItemValueKeyDown}
+								ref={itemValueInputRef}
+								placeholder="Enter item value"
 							/>
-						</div>
-						<div className="col-auto">
-							<button
-								className="btn custom-dark-btn"
-								type="submit"
-							>
-								Add Item
-							</button>
-						</div>
-					</div>
-				</form>
+							<p className="text-xs text-gray-300">
+                                Pro Tip: Press Enter to add the item!
+                            </p>
+                        </div>
+                        <div className="flex justify-end">
+						<button
+							className="bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 text-white py-2 px-4 rounded transition duration-150 ease-in-out shadow-lg font-semibold"
+							type="submit"
+						>
+							Add Item
+						</button>
+                        </div>
+                    </div>
+                </form>
 
 				<div className="mb-3">
 					<label className="form-label text-white">Quota</label>
 					<input
 						type="number"
-						className="form-control custom-dark-input"
+						className="w-full p-2 border-4 border-slate-900 rounded bg-gray-700 text-white"
 						value={cost}
 						onChange={(e) => setCost(parseFloat(e.target.value))}
 					/>
 				</div>
 
-				<div className="mb-3 d-flex justify-content-between">
-					<button
-						className="btn btn-success custom-dark-btn"
-						onClick={handleSubmit}
-					>
-						Optimize
-					</button>
-					<button
-						className="btn btn-danger custom-dark-btn"
-						onClick={handleClearData}
-					>
-						Clear List
-					</button>
-          {result && result.selectedItems && (
-                        <button
-                            className="btn btn-warning custom-dark-btn"
-                            onClick={handleRemoveHighlightedItems}
-                        >
-                            Remove Highlighted Items
-                        </button>
-                    )}
+				<div className="flex flex-wrap justify-between">
+					<div className="mt-2 sm:mt-0">
+						<button
+							className="bg-blue-500 text-white py-2 px-4 rounded"
+							onClick={handleSubmit}
+						>
+							Optimize
+						</button>
+					</div>
+
+					{result && result.selectedItems && (
+						<div className="mt-2 sm:mt-1">
+							<button
+								className="bg-yellow-500 text-white py-2 px-4 rounded"
+								onClick={handleRemoveHighlightedItems}
+							>
+								Delete Highlighted Items
+							</button>
+						</div>
+					)}
+					<div className="mt-2 sm:mt-0">
+						<button
+							className="bg-red-500 text-white py-2 px-4 rounded"
+							onClick={handleClearData}
+						>
+							Clear List
+						</button>
+					</div>
 				</div>
 
 				{items.length > 0 && (
-                    <ul className="list-group custom-dark-list">
-                        {items.map((item, index) => {
-                            const isHighlighted = result && result.selectedItems.some(selectedItem => selectedItem.name === item.name);
-                            const itemClasses = `list-group-item custom-dark-list-item ${isHighlighted ? 'highlighted-item' : ''} d-flex justify-content-between align-items-center`;
-                            return (
-                                <li key={index} className={itemClasses}>
-                                    {item.name}: ${item.value}
-                                    <button
-                                        className="btn btn-sm btn-danger"
-                                        onClick={() => handleDeleteItem(index)}
-                                    >
-                                        x
-                                    </button>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                )}
+				<ul className="flex mt-3 flex-col gap-2">
+					{items.map((item, index) => {
+						const isHighlighted = result && result.selectedItems.some(selectedItem => selectedItem.name === item.name);
+						const itemClasses = `list-group-item ${isHighlighted ? 'border-4 border-green-900 bg-green-700' : 'border-4 border-slate-900 bg-gray-700'} text-white flex justify-between items-center rounded p-2`;
+
+						return (
+							<li key={index} className={itemClasses}>
+								{item.name}: ${item.value}
+								<button
+									className="bg-red-500 text-white py-1 px-2 rounded text-xs"
+									onClick={() => handleDeleteItem(index)}
+								>
+									x
+								</button>
+							</li>
+						)
+					})}
+				</ul>
+			)}
 
                 {result && (
-                    <div className="alert alert-info mt-3 custom-dark-alert">
+                    <div className="p-3 mt-3 rounded bg-green-700 text-white">
                         <div>
                             Optimal Selection:{" "}
                             {result.selectedItems.map(item => `${item.name} ($${item.value})`).join(', ')}
@@ -208,6 +232,7 @@ function App() {
                         <div>Total Value: ${result.totalValue}</div>
                     </div>
                 )}
+				
                 <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
             </div>
         </div>
