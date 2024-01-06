@@ -30,8 +30,7 @@ function App() {
   
 	const itemNameInputRef = useRef(null);
 	const itemValueInputRef = useRef(null);
-	
-	const [quota, setQuota] = useState(0);
+
 	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
@@ -128,8 +127,8 @@ function App() {
                     itemValueInputRef={itemValueInputRef}
                 />
 				<QuotaInput
-                quota={quota}
-                setQuota={setQuota}
+                quota={cost}
+                setQuota={setCost}
             	/>
 				<TotalValueDisplay items={items} />
 				

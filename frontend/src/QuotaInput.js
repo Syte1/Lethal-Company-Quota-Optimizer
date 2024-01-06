@@ -1,6 +1,7 @@
 const QuotaInput = ({ quota, setQuota }) => {
     const handleQuotaChange = (e) => {
-        setQuota(e.target.value);
+        const quotaValue = parseFloat(e.target.value);
+        setQuota(quotaValue);
     };
 
     return (
