@@ -82,14 +82,13 @@ function App() {
 		setResult(null);
 	};
 
-  const handleRemoveHighlightedItems = () => {
-    if (result && result.selectedItems) {
-        const remainingItems = items.filter(item => !result.selectedItems.includes(item.name));
-        setItems(remainingItems);
-        // Optionally, you can also clear the result if you want
-        // setResult(null);
-    }
-};
+    const handleRemoveHighlightedItems = () => {
+        if (result && result.selectedItems) {
+            const highlightedNames = result.selectedItems.map(item => item.name);
+            const remainingItems = items.filter(item => !highlightedNames.includes(item.name));
+            setItems(remainingItems);
+        }
+    };
 	// Apply styles for the background
 	const backgroundStyle = {
 		minWidth: "100vh", // Minimum height to fill the viewport height
@@ -177,39 +176,39 @@ function App() {
                     )}
 				</div>
 
-        {items.length > 0 && (
-            <ul className="list-group custom-dark-list">
-                {items.map((item, index) => {
-                    // Check if the item is in the optimized list
-                    const isHighlighted = result && result.selectedItems.includes(item.name);
-                    const itemClasses = `list-group-item custom-dark-list-item ${isHighlighted ? 'highlighted-item' : ''} d-flex justify-content-between align-items-center`;
-                    return (
-                        <li key={index} className={itemClasses}>
-                            {item.name}: ${item.value}
-								<button
-									className="btn btn-sm btn-danger"
-									onClick={() => handleDeleteItem(index)}
-								>
-									x
-								</button>
-							</li>
-						)})}
-					</ul>
-				)}
+				{items.length > 0 && (
+                    <ul className="list-group custom-dark-list">
+                        {items.map((item, index) => {
+                            const isHighlighted = result && result.selectedItems.some(selectedItem => selectedItem.name === item.name);
+                            const itemClasses = `list-group-item custom-dark-list-item ${isHighlighted ? 'highlighted-item' : ''} d-flex justify-content-between align-items-center`;
+                            return (
+                                <li key={index} className={itemClasses}>
+                                    {item.name}: ${item.value}
+                                    <button
+                                        className="btn btn-sm btn-danger"
+                                        onClick={() => handleDeleteItem(index)}
+                                    >
+                                        x
+                                    </button>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                )}
 
-				{result && (
-					<div className="alert alert-info mt-3 custom-dark-alert">
-						<div>
-							Optimal Selection:{" "}
-							{JSON.stringify(result.selectedItems)}
-						</div>
-						<div>Total Value: ${result.totalValue}</div>
-					</div>
-				)}
-        <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
-			</div>
-		</div>
-	);
+                {result && (
+                    <div className="alert alert-info mt-3 custom-dark-alert">
+                        <div>
+                            Optimal Selection:{" "}
+                            {result.selectedItems.map(item => `${item.name} ($${item.value})`).join(', ')}
+                        </div>
+                        <div>Total Value: ${result.totalValue}</div>
+                    </div>
+                )}
+                <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
+            </div>
+        </div>
+    );
 }
 
 export default App;

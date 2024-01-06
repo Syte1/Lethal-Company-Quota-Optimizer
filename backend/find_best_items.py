@@ -40,7 +40,9 @@ def knapsack_dp(items, cost):
     selected_items = []
     for i in range(n, 0, -1):
         if dp[i][j] != dp[i - 1][j]:
-            selected_items.append(list(items.keys())[i - 1])
+            item_name = list(items.keys())[i - 1]
+            item_value = items[item_name]
+            selected_items.append((item_name, item_value))
             j -= values[i - 1]
 
     return selected_items, final_value

@@ -11,7 +11,8 @@ def optimize():
     items = data['items']
     cost = data['cost']
     selected_items, total_value = knapsack_dp(items, cost)
-    return jsonify({"selectedItems": selected_items, "totalValue": total_value})
+    formatted_selected_items = [{"name": name, "value": value} for name, value in selected_items]
+    return jsonify({"selectedItems": formatted_selected_items, "totalValue": total_value})
 
 if __name__ == '__main__':
     app.run(debug=True)
