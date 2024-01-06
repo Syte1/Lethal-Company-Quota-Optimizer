@@ -5,7 +5,7 @@ const TutorialHint = ({ onTutorialClick }) => {
     // Check if the tutorial has been clicked before
     const hasClickedTutorial = Cookies.get('hasClickedTutorial');
 
-    // if (hasClickedTutorial) return null;
+    if (hasClickedTutorial) return null;
 
     const handleClick = () => {
         Cookies.set('hasClickedTutorial', 'true');

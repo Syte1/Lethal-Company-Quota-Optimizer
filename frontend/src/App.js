@@ -9,6 +9,7 @@ import ConfirmationModal from './ConfirmationModal';
 import ResultDisplay from './ResultDisplay';
 import TotalValueDisplay from './TotalValueDisplay';
 import TutorialHint from './TutorialHint';
+import QuotaInput from './QuotaInput';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
 	const itemNameInputRef = useRef(null);
 	const itemValueInputRef = useRef(null);
 	
+	const [quota, setQuota] = useState(0);
 	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
@@ -107,7 +109,7 @@ function App() {
     };
 
     return (
-        <div className="min-h-screen min-w-full bg-cover bg-center" style={{backgroundImage: `url('/lethal-company-dance.gif')`}}>
+        <div className="min-h-screen min-w-full bg-cover bg-center"  style={{ background: "black" }}>
             <div className="container mx-auto p-4 text-white">
                 <h1 className="text-center text-4xl mb-4">Belal's Quota Optimizer</h1>
                 <TutorialHint onTutorialClick={toggleTutorialModal} />
@@ -125,6 +127,10 @@ function App() {
                     itemNameInputRef={itemNameInputRef}
                     itemValueInputRef={itemValueInputRef}
                 />
+				<QuotaInput
+                quota={quota}
+                setQuota={setQuota}
+            	/>
 				<TotalValueDisplay items={items} />
 				
                 <ControlPanel
