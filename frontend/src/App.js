@@ -21,8 +21,10 @@ function App() {
   const toggleTutorialModal = () => {
     setIsTutorialVisible(!isTutorialVisible);
   };
+  
 	const itemNameInputRef = useRef(null);
 	const itemValueInputRef = useRef(null);
+	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
@@ -71,14 +73,23 @@ function App() {
 		}
 	};
 
-	const handleClearData = () => {
-		Cookies.remove("items");
-		Cookies.remove("cost");
-		Cookies.remove("result");
-		setItems([]);
-		setCost(0);
-		setResult(null);
-	};
+    const handleClearData = () => {
+        setIsClearConfirmVisible(true);
+    };
+	
+    const confirmClearData = () => {
+        Cookies.remove("items");
+        Cookies.remove("cost");
+        Cookies.remove("result");
+        setItems([]);
+        setCost(0);
+        setResult(null);
+        setIsClearConfirmVisible(false); // Close the modal after clearing
+    };
+
+	const cancelClearData = () => {
+        setIsClearConfirmVisible(false); // Close the modal without clearing
+    };
 
     const handleRemoveHighlightedItems = () => {
         if (result && result.selectedItems) {
@@ -110,7 +121,7 @@ function App() {
                     Belal's Quota Optimizer
                 </h1>
                 <div className="text-center">
-                    <button onClick={toggleTutorialModal} className="bg-blue-500 text-white py-2 px-4 rounded mb-3">Tutorial</button>
+                    <button onClick={toggleTutorialModal} className="bg-blue-500 text-white py-2 px-4 rounded mb-3 transform transition duration-150 ease-in-out active:scale-75">Tutorial</button>
                 </div>
                 <form onSubmit={handleAddItem} className="mb-3">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -150,7 +161,7 @@ function App() {
                         </div>
                         <div className="flex justify-end">
 						<button
-							className="bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 text-white py-2 px-4 rounded transition duration-150 ease-in-out shadow-lg font-semibold"
+							className="bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50 text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75 shadow-lg font-semibold"
 							type="submit"
 						>
 							Add Item
@@ -172,17 +183,17 @@ function App() {
 				<div className="flex flex-wrap justify-between">
 					<div className="mt-2 sm:mt-0">
 						<button
-							className="bg-blue-500 text-white py-2 px-4 rounded"
-							onClick={handleSubmit}
-						>
-							Optimize
+                            className="bg-blue-500 text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
+                            onClick={handleSubmit}
+                        >
+								Optimize
 						</button>
 					</div>
 
 					{result && result.selectedItems && (
 						<div className="mt-2 sm:mt-1">
 							<button
-								className="bg-yellow-500 text-white py-2 px-4 rounded"
+								className="bg-amber-800 text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
 								onClick={handleRemoveHighlightedItems}
 							>
 								Delete Highlighted Items
@@ -190,10 +201,10 @@ function App() {
 						</div>
 					)}
 					<div className="mt-2 sm:mt-0">
-						<button
-							className="bg-red-500 text-white py-2 px-4 rounded"
-							onClick={handleClearData}
-						>
+					<button
+                            className="bg-red-500 text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
+                            onClick={handleClearData}
+                        >
 							Clear List
 						</button>
 					</div>
@@ -209,7 +220,7 @@ function App() {
 							<li key={index} className={itemClasses}>
 								{item.name}: ${item.value}
 								<button
-									className="bg-red-500 text-white py-1 px-2 rounded text-xs"
+									className="bg-red-500 text-white py-1 px-2 rounded text-xs transform transition duration-150 ease-in-out active:scale-75"
 									onClick={() => handleDeleteItem(index)}
 								>
 									x
@@ -229,6 +240,21 @@ function App() {
                         <div>Total Value: ${result.totalValue}</div>
                     </div>
                 )}
+				            {isClearConfirmVisible && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
+                    <div className="bg-red-800 p-5 rounded">
+                        <h2>Are you sure you want to clear the list?</h2>
+                        <div className="flex justify-around mt-4">
+                            <button onClick={confirmClearData} className="bg-green-500 text-white py-2 px-4 rounded">
+                                Yes, Clear List
+                            </button>
+                            <button onClick={cancelClearData} className="bg-red-500 text-white py-2 px-4 rounded">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 				
                 <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
             </div>
