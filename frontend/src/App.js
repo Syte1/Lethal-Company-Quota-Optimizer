@@ -7,6 +7,7 @@ import ItemList from './ItemList';
 import ControlPanel from './ControlPanel';
 import ConfirmationModal from './ConfirmationModal';
 import ResultDisplay from './ResultDisplay';
+import TotalValueDisplay from './TotalValueDisplay';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -113,7 +114,6 @@ function App() {
                 <div className="text-center">
                     <button onClick={toggleTutorialModal} className="bg-blue-500 text-white py-2 px-4 rounded mb-3 transform transition duration-150 ease-in-out active:scale-75">Tutorial</button>
                 </div>
-
                 <ItemForm
                     onAddItem={handleAddItem}
                     newItemName={newItemName}
@@ -123,6 +123,7 @@ function App() {
                     itemNameInputRef={itemNameInputRef}
                     itemValueInputRef={itemValueInputRef}
                 />
+				<TotalValueDisplay items={items} />
 				
                 <ControlPanel
                     onOptimize={handleSubmit}
