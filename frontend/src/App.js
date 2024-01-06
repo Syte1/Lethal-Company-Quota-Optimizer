@@ -60,13 +60,10 @@ function App() {
 
 	const handleSubmit = async () => {
 		try {
-			const itemsObject = items.reduce(
-				(obj, item) => ({ ...obj, [item.name]: item.value }),
-				{}
-			);
+			// Send the items as an array of objects, not as a key-value pair object
 			const response = await axios.post(
 				"http://127.0.0.1:5000/optimize",
-				{ items: itemsObject, cost }
+				{ items: items, cost }
 			);
 			setResult(response.data);
 		} catch (error) {
