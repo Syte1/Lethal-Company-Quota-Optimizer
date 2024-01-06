@@ -8,6 +8,7 @@ import ControlPanel from './ControlPanel';
 import ConfirmationModal from './ConfirmationModal';
 import ResultDisplay from './ResultDisplay';
 import TotalValueDisplay from './TotalValueDisplay';
+import TutorialHint from './TutorialHint';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -28,10 +29,11 @@ function App() {
   
 	const itemNameInputRef = useRef(null);
 	const itemValueInputRef = useRef(null);
+	
 	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
-  const [isTutorialVisible, setIsTutorialVisible] = useState(false);
+  	const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
     useEffect(() => {
         // Update cookies whenever items or cost change
@@ -108,7 +110,7 @@ function App() {
         <div className="min-h-screen min-w-full bg-cover bg-center" style={{backgroundImage: `url('/lethal-company-dance.gif')`}}>
             <div className="container mx-auto p-4 text-white">
                 <h1 className="text-center text-4xl mb-4">Belal's Quota Optimizer</h1>
-                
+                <TutorialHint onTutorialClick={toggleTutorialModal} />
                 <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
 
                 <div className="text-center">
