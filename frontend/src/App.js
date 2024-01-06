@@ -3,7 +3,6 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
 import "./DarkMode.css";
-import AdComponent from './AdComponent';
 import TutorialModal from './TutorialModal';
 // import animationGif from "./lethal-company-dance.gif";
 
@@ -209,7 +208,6 @@ function App() {
 				)}
         <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
 			</div>
-      <AdComponent />
 		</div>
 	);
 }
