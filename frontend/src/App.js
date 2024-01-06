@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
@@ -45,10 +45,12 @@ function App() {
 			setItems([...items, newItem]);
 			setNewItemName("");
 			setNewItemValue("");
+			itemNameInputRef.current.focus();
 		} else {
 			alert("Please enter a value for the item.");
 		}
 	};
+
 	const handleDeleteItem = (index) => {
 		const newItems = [...items];
 		newItems.splice(index, 1);
@@ -64,7 +66,7 @@ function App() {
 				{}
 			);
 			const response = await axios.post(
-				"https://lethal-company-quota-optimizer-backend.onrender.com/optimize",
+				"http://127.0.0.1:5000/optimize",
 				{ items: itemsObject, cost }
 			);
 			setResult(response.data);
@@ -96,7 +98,7 @@ function App() {
 		background: `url('/lethal-company-dance.gif') no-repeat center center`,
 		backgroundSize: "cover", // Cover the entire viewport
 	};
-
+	const itemNameInputRef = useRef(null);
 	return (
 		<div style={backgroundStyle}>
 			<div className="container mt-5 custom-dark">
@@ -117,6 +119,7 @@ function App() {
 								className="form-control custom-dark-input"
 								value={newItemName}
 								onChange={(e) => setNewItemName(e.target.value)}
+								ref={itemNameInputRef}
 							/>
 						</div>
 						<div className="col">
