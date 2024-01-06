@@ -19,10 +19,8 @@ function App() {
 		const savedCost = Cookies.get("cost");
 		return savedCost ? parseFloat(savedCost) : 0;
 	});
-	const [result, setResult] = useState(() => {
-		const savedResult = Cookies.get("result");
-		return savedResult ? JSON.parse(savedResult) : null;
-	});
+	const [result, setResult] = useState(null);
+
   const toggleTutorialModal = () => {
     setIsTutorialVisible(!isTutorialVisible);
   };
@@ -34,12 +32,12 @@ function App() {
 	const [newItemValue, setNewItemValue] = useState("");
   const [isTutorialVisible, setIsTutorialVisible] = useState(false);
 
-	useEffect(() => {
-		// Update cookies whenever items or result change
-		Cookies.set("items", JSON.stringify(items));
-		Cookies.set("cost", cost);
-		Cookies.set("result", JSON.stringify(result));
-	}, [items, cost, result]);
+    useEffect(() => {
+        // Update cookies whenever items or cost change
+        Cookies.set("items", JSON.stringify(items));
+        Cookies.set("cost", cost);
+    }, [items, cost]);
+
 
 	const handleAddItem = (e) => {
 		e.preventDefault();
@@ -101,6 +99,7 @@ function App() {
             const highlightedNames = result.selectedItems.map(item => item.name);
             const remainingItems = items.filter(item => !highlightedNames.includes(item.name));
             setItems(remainingItems);
+			setResult(null);
         }
     };
 
