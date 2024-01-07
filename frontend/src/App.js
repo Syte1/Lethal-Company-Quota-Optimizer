@@ -69,16 +69,22 @@ function App() {
 	};
 
 	const handleSubmit = async () => {
-		try {
-			// Send the items as an array of objects, not as a key-value pair object
-			const response = await axios.post(
-				"http://127.0.0.1:5000/optimize",
-				{ items: items, cost }
-			);
-			setResult(response.data);
-		} catch (error) {
-			console.error("Error in optimization request", error);
+		if (cost) {
+			try {
+				// Send the items as an array of objects, not as a key-value pair object
+				const response = await axios.post(
+					"http://127.0.0.1:5000/optimize",
+					{ items: items, cost }
+				);
+				setResult(response.data);
+			} catch (error) {
+				console.error("Error in optimization request", error);
+			}
 		}
+		else {
+			alert("Please enter a quota value.")
+		}
+
 	};
 
     const handleClearData = () => {
