@@ -73,7 +73,7 @@ function App() {
 			try {
 				// Send the items as an array of objects, not as a key-value pair object
 				const response = await axios.post(
-					"http://127.0.0.1:5000/optimize",
+					"https://lethal-company-quota-optimizer-backend.onrender.com/optimize",
 					{ items: items, cost }
 				);
 				setResult(response.data);
