@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import Cookies from "js-cookie";
-import TutorialModal from './TutorialModal';
-import ItemForm from './ItemForm'; // Import the new components
-import ItemList from './ItemList';
-import ControlPanel from './ControlPanel';
-import ConfirmationModal from './ConfirmationModal';
-import ResultDisplay from './ResultDisplay';
-import TotalValueDisplay from './TotalValueDisplay';
-import TutorialHint from './TutorialHint';
-import QuotaInput from './QuotaInput';
+import TutorialModal from './Components/TutorialModal';
+import ItemForm from './Components/ItemForm';
+import ItemList from './Components/ItemList';
+import ControlPanel from './Components/ControlPanel';
+import ConfirmationModal from './Components/ConfirmationModal';
+import ResultDisplay from './Components/ResultDisplay';
+import TotalValueDisplay from './Components/TotalValueDisplay';
+import TutorialHint from './Components/TutorialHint';
+import QuotaInput from './Components/QuotaInput';
+import GitHubLink from './Components/GitHubLink';
+import PortfolioLink from './Components/PortfolioLink';
 // import animationGif from "./lethal-company-dance.gif";
 
 function App() {
@@ -63,7 +65,6 @@ function App() {
 		const newItems = [...items];
 		newItems.splice(index, 1);
 		setItems(newItems);
-		// Optionally remove or update the result since the item list has changed
 		setResult(null);
 	};
 
@@ -110,7 +111,12 @@ function App() {
     return (
         <div className="min-h-screen min-w-full bg-cover bg-center"  style={{ background: "black" }}>
             <div className="container mx-auto p-4 text-white">
-                <h1 className="text-center text-4xl mb-4">Belal's Quota Optimizer</h1>
+				<div className="flex justify-center items-center gap-5 opacity-30">
+					<h1 className="text-center text-4xl mb-4">Belal's Quota Optimizer</h1>
+                    <GitHubLink url="https://github.com/Syte1/Lethal-Company-Quota-Optimizer" />
+                    <PortfolioLink url="https://syte1.github.io/" />
+                </div>
+                
                 <TutorialHint onTutorialClick={toggleTutorialModal} />
                 <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
 
@@ -152,6 +158,7 @@ function App() {
                 />
 
                 {result && <ResultDisplay result={result} />}
+
             </div>
         </div>
     );
