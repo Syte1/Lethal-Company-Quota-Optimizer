@@ -1,5 +1,7 @@
 # Lethal Company Quota Optimizer
 
+[Try it here!](https://lethal-company-quota-optimizer-frontend.onrender.com/)
+
 ## Overview
 Lethal Company Quota Optimizer is a robust tool designed to efficiently determine the optimal combination of items to sell in order to meet sales quotas without exceeding them more than necessary. The project consists of a React-based frontend and a Flask backend, which includes a specialized implementation of the knapsack problem algorithm.
 
