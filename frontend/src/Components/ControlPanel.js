@@ -1,36 +1,30 @@
 const ControlPanel = ({ onOptimize, onRemoveHighlighted, onClearData, result }) => {
     return (
-        <div className="flex flex-wrap justify-between">
-            <div className="mt-2 sm:mt-0">
-                <button
-                    className="bg-blue-500 font-medium text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
-                    onClick={onOptimize}
-                >
-                    Optimize
-                </button>
-            </div>
+        <div className="flex justify-between flex-nowrap">
+            <button
+                className="bg-blue-500 text-sm sm:text-base py-2 px-2 sm:px-4 rounded transform transition duration-150 ease-in-out active:scale-75 mt-2"
+                onClick={onOptimize}
+            >
+                Optimize
+            </button>
 
             {result && result.selectedItems && (
-                <div className="mt-2 sm:mt-1">
-                    <button
-                        className="bg-yellow-500 font-medium text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
-                        onClick={onRemoveHighlighted}
-                    >
-                        Delete Highlighted Items
-                    </button>
-                </div>
+                <button
+                    className="bg-yellow-500 text-sm sm:text-base py-2 px-2 sm:px-4 rounded transform transition duration-150 ease-in-out active:scale-75 mt-2"
+                    onClick={onRemoveHighlighted}
+                >
+                    Delete Highlighted Items
+                </button>
             )}
 
-            <div className="mt-2 sm:mt-0">
-                <button
-                    className="bg-red-500 font-medium text-white py-2 px-4 rounded transform transition duration-150 ease-in-out active:scale-75"
-                    onClick={onClearData}
-                >
-                    Clear List
-                </button>
-            </div>
+            <button
+                className="bg-red-500 text-sm sm:text-base py-2 px-2 sm:px-4 rounded transform transition duration-150 ease-in-out active:scale-75 mt-2"
+                onClick={onClearData}
+            >
+                Clear List
+            </button>
         </div>
     );
 };
 
-export default ControlPanel
+export default ControlPanel;

@@ -115,8 +115,8 @@ function App() {
     };
 
     return (
-        <div className="min-h-screen min-w-full bg-cover bg-center"  style={{ background: "black" }}>
-            <div className="container mx-auto p-4 text-white">
+        <div className="min-h-screen  bg-cover bg-center"  style={{ background: "black" }}>
+            <div className="container mx-auto max-w-xl p-4 text-white">
 				<div className="flex justify-center items-center gap-5 opacity-30">
 					<h1 className="text-center text-4xl mb-4">Belal's Quota Optimizer</h1>
                     <GitHubLink url="https://github.com/Syte1/Lethal-Company-Quota-Optimizer" />
