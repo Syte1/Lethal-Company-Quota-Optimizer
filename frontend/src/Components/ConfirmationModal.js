@@ -1,9 +1,19 @@
 const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => {
     if (!isVisible) return null;
 
+    const handleOverlayClick = (e) => {
+        // Check if the click is on the overlay itself and not on the child elements
+        if (e.target === e.currentTarget) {
+            onCancel();
+        }
+    };
+
     return (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center">
-            <div className="bg-white p-5 rounded">
+        <div 
+            className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center"
+            onClick={handleOverlayClick} // Add the click handler here
+        >
+            <div className="bg-red-700 p-5 rounded">
                 <h2 className="text-lg font-semibold mb-4">Are you sure you want to clear the list?</h2>
                 <div className="flex justify-around mt-4">
                     <button 
@@ -24,4 +34,4 @@ const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => {
     );
 };
 
-export default ConfirmationModal
+export default ConfirmationModal;
