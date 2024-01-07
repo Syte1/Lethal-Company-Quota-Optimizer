@@ -26,13 +26,20 @@ function App() {
 	});
 	const [result, setResult] = useState(null);
 
-  const toggleTutorialModal = () => {
-    setIsTutorialVisible(!isTutorialVisible);
-  };
+    const toggleTutorialModal = () => {
+        if (!isTutorialVisible) {
+          Cookies.set('hasClickedTutorial', 'true', { expires: 365 });
+          setHasClickedTutorial(true);
+        }
+        setIsTutorialVisible(!isTutorialVisible);
+      };
   
 	const itemNameInputRef = useRef(null);
 	const itemValueInputRef = useRef(null);
 
+    const [hasClickedTutorial, setHasClickedTutorial] = useState(() => {
+        return Cookies.get('hasClickedTutorial') === 'true';
+      });
 	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
@@ -123,9 +130,10 @@ function App() {
                     <PortfolioLink url="https://syte1.github.io/" />
                 </div>
                 
-                <TutorialHint onTutorialClick={toggleTutorialModal} />
-                <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
-
+                {!hasClickedTutorial && (
+                    <TutorialHint onTutorialClick={toggleTutorialModal} />
+                )}
+                    <TutorialModal isVisible={isTutorialVisible} onClose={toggleTutorialModal} gifUrl="/Tutorial.gif" />
                 <div className="text-center">
                     <button onClick={toggleTutorialModal} className="bg-blue-500 text-white py-2 px-4 rounded mb-3 transform transition duration-150 ease-in-out active:scale-75">Tutorial</button>
                 </div>
