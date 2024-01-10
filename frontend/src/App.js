@@ -40,6 +40,7 @@ function App() {
     const [hasClickedTutorial, setHasClickedTutorial] = useState(() => {
         return Cookies.get('hasClickedTutorial') === 'true';
       });
+    const [isLoading, setIsLoading] = useState(false);
 	const [isClearConfirmVisible, setIsClearConfirmVisible] = useState(false);
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemValue, setNewItemValue] = useState("");
@@ -78,14 +79,16 @@ function App() {
 	const handleSubmit = async () => {
 		if (cost) {
 			try {
-				// Send the items as an array of objects, not as a key-value pair object
+                setIsLoading(true);
 				const response = await axios.post(
 					"https://lethal-company-quota-optimizer-backend.onrender.com/optimize",
 					{ items: items, cost }
 				);
 				setResult(response.data);
+                setIsLoading(false);
 			} catch (error) {
 				console.error("Error in optimization request", error);
+                setIsLoading(false);
 			}
 		}
 		else {
@@ -157,6 +160,7 @@ function App() {
                     onRemoveHighlighted={handleRemoveHighlightedItems}
                     onClearData={handleClearData}
                     result={result}
+                    isLoading={isLoading}
                 />
 
                 <ItemList
