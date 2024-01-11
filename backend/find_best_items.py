@@ -40,19 +40,19 @@ def knapsack_dp(items, cost):
     return selected_items, final_value
 
 # List of items as tuples (name, value)
-items = [
-    ("cap", 53),
-    ("baseball", 42),
-    ("snake", 21),
-    ("banana", 4),
-    ("cash register", 95),
-    ("ape", 32),
-    ("banana", 33),
-    ("banana", 1),
-    ("computer", 254),
-    ("rocket", 149)
-]
+# items = [
+#     ("cap", 53),
+#     ("baseball", 42),
+#     ("snake", 21),
+#     ("banana", 4),
+#     ("cash register", 95),
+#     ("ape", 32),
+#     ("banana", 33),
+#     ("banana", 1),
+#     ("computer", 254),
+#     ("rocket", 149)
+# ]
 
-cost = 34
-selected_items, total_value = knapsack_dp(items, cost)
-print(selected_items, total_value)
+# cost = 34
+# selected_items, total_value = knapsack_dp(items, cost)
+# print(selected_items, total_value)
